@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 .container {
@@ -34,10 +35,13 @@
 }
 
 .Grid-Buttons button {
-    background-color: #fff;
+    background-color: #B0A222;
     outline: none;
     color: #232E3C;
     cursor: pointer;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: #000;
 }
 
 .multiply {
@@ -123,4 +127,12 @@
 .clear {
     grid-column: 1/4;
     grid-row: 1;
+}
+@media screen and (max-width:650px) {
+    .Grid-Buttons {
+        min-width: 50%;
+    }
+    .screen{
+        min-width: 50%;
+    }
 }
