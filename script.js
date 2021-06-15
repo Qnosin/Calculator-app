@@ -4,51 +4,63 @@ class Calculator {
         this.num2 = num2;
         this.operator = operator;
     }
-    addNumbers() {
-        const text = monitor.innerHTML
-        if (text.includes('+')) {
-            const num1 = text.slice(0, text.indexOf('+'));
-            const num2 = text.slice(text.indexOf('+') + 1, text.length);
-            const result = Number(num1) + Number(num2);
-            monitor.innerHTML = result;
-
-        }
-    }
-    minusNumbers() {
-        const text = monitor.innerHTML
-        if (text.includes('-')) {
-            const num1 = text.slice(0, text.indexOf('-'));
-            const num2 = text.slice(text.indexOf('-') + 1, text.length);
-            const result = Number(num1) - Number(num2);
-            monitor.innerHTML = result;
-        }
-
-    }
-    divideNumbers() {
-        const text = monitor.innerHTML
-        if (text.includes('/')) {
-            const num1 = text.slice(0, text.indexOf('/'));
-            const num2 = text.slice(text.indexOf('/') + 1, text.length);
-            const result = Number(num1) / Number(num2);
-            monitor.innerHTML = result;
-        }
-    }
     multiplyNumbers() {
         const text = monitor.innerHTML
-        if (text.includes('*')) {
-            const num1 = text.slice(0, text.indexOf('*'));
-            const num2 = text.slice(text.indexOf('*') + 1, text.length);
-            const result = Number(num1) * Number(num2);
-            monitor.innerHTML = result;
-        }
-    }
-    brackets() {
-        const text = monitor.innerHTML
-        if (text.includes('(') || text.includes(')')) {
-            const numbers = text.slice(text.indexOf('(') + 1, text.indexOf(')'));
-            if (numbers.includes('+')) {
-                person.addNumbers();
+        if (text) {
+            let arr = []
+            let counter = 0;
+            
+            text.split('').forEach(n =>{
+                if(n !== ' ' && n !== '\n'){
+                    arr.push(n)
+                }
+            })
+            let sumofFirstNumbers = arr[0] + arr[1]
+            if(Number(sumofFirstNumbers ) >= 10){
+                counter = Number(sumofFirstNumbers )
+            }else{
+                counter = Number(arr[0])
             }
+            console.log(arr)
+            console.log(counter)
+            for(let d of arr){
+                if(d == '*'){
+                    console.log(counter)
+                   const indexMultiply = arr.indexOf(d)
+                   let sumofSecondNumbers = arr[indexMultiply +1] + arr[indexMultiply +2]
+                   if(sumofSecondNumbers >= 10){
+                       counter = counter * sumofSecondNumbers
+                   }else{
+                    counter = counter * arr[indexMultiply + 1];
+                   }
+                }else if(d == '+'){
+                    const indexOFaddNumbers = arr.indexOf(d)
+                    let sumofSecondNumbers = arr[indexOFaddNumbers +1] + arr[indexOFaddNumbers +2]
+                    if(sumofSecondNumbers >= 10){
+                        counter = counter + sumofSecondNumbers
+                    }else{
+                        counter = counter + Number(arr[indexOFaddNumbers + 1]);
+                    }
+                }else if(d == '-'){
+                    const indexOFminusNumber = arr.indexOf(d)
+                    let sumofSecondNumbers = arr[indexOFminusNumber +1] + arr[indexOFaddNumbers +2]
+                    if(sumofSecondNumbers >= 10){
+                        counter = counter - sumofSecondNumbers
+                    }else{
+                        counter = counter - Number(arr[indexOFminusNumber + 1]);
+                    }
+                }else if(d == '/'){
+                    const indexOFdivideNumber = arr.indexOf(d)
+                    let sumofSecondNumbers = arr[indexOFdivideNumber +1] + arr[indexOFdivideNumber +2]
+                    if(sumofSecondNumbers >= 10){
+                        counter = counter / sumofSecondNumbers
+                    }else{
+                        counter = counter / Number(arr[indexOFdivideNumber + 1]);
+                    }
+                }
+                
+            }
+            monitor.innerHTML = counter;
         }
     }
 }
@@ -75,17 +87,6 @@ for (const i of operators) {
 
     })
 }
-equal.addEventListener('click', function() {
-    if (monitor.innerHTML.includes('(') || monitor.innerHTML.includes(')')) {
-        person.brackets();
-    }
-    if (monitor.innerHTML.includes('+')) {
-        person.addNumbers();
-    } else if (monitor.innerHTML.includes('-')) {
-        person.minusNumbers();
-    } else if (monitor.innerHTML.includes('/')) {
-        person.divideNumbers();
-    } else if (monitor.innerHTML.includes('*')) {
-        person.multiplyNumbers();
-    }
-});
+equal.addEventListener('click', ()=>{
+    person.multiplyNumbers();
+})
