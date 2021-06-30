@@ -4,64 +4,35 @@ class Calculator {
         this.num2 = num2;
         this.operator = operator;
     }
-    multiplyNumbers() {
+    Main() {
         const text = monitor.innerHTML
-        if (text) {
-            let arr = []
-            let counter = 0;
-            
-            text.split('').forEach(n =>{
-                if(n !== ' ' && n !== '\n'){
-                    arr.push(n)
-                }
-            })
-            let sumofFirstNumbers = arr[0] + arr[1]
-            if(Number(sumofFirstNumbers ) >= 10){
-                counter = Number(sumofFirstNumbers )
-            }else{
-                counter = Number(arr[0])
-            }
-            console.log(arr)
-            console.log(counter)
-            for(let d of arr){
-                if(d == '*'){
-                    console.log(counter)
-                   const indexMultiply = arr.indexOf(d)
-                   let sumofSecondNumbers = arr[indexMultiply +1] + arr[indexMultiply +2]
-                   if(sumofSecondNumbers >= 10){
-                       counter = counter * sumofSecondNumbers
-                   }else{
-                    counter = counter * arr[indexMultiply + 1];
-                   }
-                }else if(d == '+'){
-                    const indexOFaddNumbers = arr.indexOf(d)
-                    let sumofSecondNumbers = arr[indexOFaddNumbers +1] + arr[indexOFaddNumbers +2]
-                    if(sumofSecondNumbers >= 10){
-                        counter = counter + sumofSecondNumbers
-                    }else{
-                        counter = counter + Number(arr[indexOFaddNumbers + 1]);
-                    }
-                }else if(d == '-'){
-                    const indexOFminusNumber = arr.indexOf(d)
-                    let sumofSecondNumbers = arr[indexOFminusNumber +1] + arr[indexOFaddNumbers +2]
-                    if(sumofSecondNumbers >= 10){
-                        counter = counter - sumofSecondNumbers
-                    }else{
-                        counter = counter - Number(arr[indexOFminusNumber + 1]);
-                    }
-                }else if(d == '/'){
-                    const indexOFdivideNumber = arr.indexOf(d)
-                    let sumofSecondNumbers = arr[indexOFdivideNumber +1] + arr[indexOFdivideNumber +2]
-                    if(sumofSecondNumbers >= 10){
-                        counter = counter / sumofSecondNumbers
-                    }else{
-                        counter = counter / Number(arr[indexOFdivideNumber + 1]);
-                    }
-                }
-                
-            }
-            monitor.innerHTML = counter;
-        }
+        
+       if(text.includes('*')){
+           const multiply = text.indexOf('*');
+           const firstNum = text.slice(0,multiply);
+           const secondNum = text.slice(multiply + 1);
+           let answer = Number(firstNum) * Number(secondNum);
+           monitor.innerHTML = answer
+        }else if(text.includes('+')){
+           const plus = text.indexOf('+');
+           const firstNum = text.slice(0,plus);
+           const secondNum = text.slice(plus + 1);
+           let answer = Number(firstNum) + Number(secondNum);
+           monitor.innerHTML = answer
+        }else if(text.includes('-')){
+           const minus = text.indexOf('-');
+           const firstNum = text.slice(0,minus);
+           const secondNum = text.slice(minus + 1);
+           let answer = Number(firstNum) - Number(secondNum);
+           monitor.innerHTML = answer
+        }else if(text.includes('/')){
+           const divide = text.indexOf('/');
+           const firstNum = text.slice(0,divide);
+           const secondNum = text.slice(divide + 1);
+           let answer = Number(firstNum) / Number(secondNum);
+           monitor.innerHTML = answer
+        } 
+
     }
 }
 
@@ -70,6 +41,7 @@ const operators = document.querySelectorAll('.operator')
 const monitor = document.querySelector('.screen');
 const equal = document.querySelector('.equal');
 const person = new Calculator(numbers, operators, numbers);
+let counter = 0;
 for (const i of person.num1) {
     i.addEventListener('click', function() {
         monitor.innerHTML += i.value;
@@ -81,12 +53,20 @@ for (const i of operators) {
 
         } else if (i.value == 'Ac') {
             monitor.innerHTML = '';
-        } else {
+            counter = 0;
+        }else{
+            if(counter < 1){
             monitor.innerHTML += i.value;
+            counter ++;
+            }
+            else if(counter > 1){
+
+            }
         }
 
     })
 }
 equal.addEventListener('click', ()=>{
-    person.multiplyNumbers();
+    person.Main();
+    counter = 0;
 })
